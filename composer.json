@@ -1,11 +1,24 @@
 {
     "name": "sellium/sellium",
     "description": "A simple php framework for building web application",
+    "keywords": ["framework", "php", "sellium"],
     "type": "project",
     "license": "MIT",
+    "readme": "",
+    "time": "",
+    "support": {
+        "issues": "https://github.com/MamadouAlySy/sellium/issues",
+        "wiki": "https://github.com/MamadouAlySy/sellium/wiki",
+        "source": "https://github.com/MamadouAlySy/sellium"
+    },
     "autoload": {
         "psr-4": {
-            "Sellium\\": "src/"
+            "Sellium\\": "src/sellium/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
         }
     },
     "authors": [
@@ -15,5 +28,13 @@
         }
     ],
     "minimum-stability": "alpha",
-    "require": {}
+    "require": {
+        "php": "^8.1",
+        "ext-mbstring": "*",
+        "ext-iconv": "*",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-simplexml": "*"
+    }
 }
