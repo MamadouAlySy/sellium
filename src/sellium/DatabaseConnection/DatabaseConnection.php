@@ -59,8 +59,8 @@ class DatabaseConnection implements DatabaseConnectionInterface
             try {
                 $this->pdoInstance = new PDO(
                     $this->credentials['dsn'],
-                    $this->credentials['username'],
-                    $this->credentials['password'],
+                    $this->credentials['username'] ?? 'root',
+                    $this->credentials['password'] ?? '',
                     $this->pdoOptions
                 );
             } catch (Exception $e) {
