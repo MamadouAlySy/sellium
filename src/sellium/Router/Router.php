@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sellium\Router;
 
 use Exception;
+use Sellium\Router\Exception\RouteNotFoundException;
 
 /**
 * Router Class
@@ -37,6 +38,8 @@ class Router implements RouterInterface
      */
     // private string $controllerSuffifx = 'Controller';
 
+    public function __construct() {}
+
     /**
      * @inheritDoc
      */
@@ -48,28 +51,20 @@ class Router implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function dispatch(string $url): void
+    public function dispatch(string $url): RouteInterface
     {
         if ($this->match($url)) {
             $controllerName = $this->matchedRouteParameters['controller'];
             $controllerName = $this->transformToUpperCamelCase($controllerName);
             $namespace = $this->getNamespace();
             $controllerName = $namespace . $controllerName;
-            if (class_exists($controllerName)) {
-                $controllerObject = new $controllerName($this->matchedRouteParameters);
-                $action = $this->matchedRouteParameters['action'];
-                $action = $this->transformToCamelCase($action);
-                if (is_callable([$controllerObject, $action])) {
-                    call_user_func([$controllerObject, $action]);
-                } else {
-                    throw new Exception();
-                }
-            } else {
-                throw new Exception();
-            }
-        } else {
-            throw new Exception();
+            $actionName = $this->matchedRouteParameters['action'];
+            $actionName = $this->transformToCamelCase($actionName);
+            unset($this->matchedRouteParameters['controller']);
+            unset($this->matchedRouteParameters['action']);
+            return new Route($controllerName, $actionName, $this->matchedRouteParameters);
         }
+        throw new RouteNotFoundException();
     }
 
     /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sellium\Router;
 
+use Sellium\Router\Exception\RouteNotFoundException;
+
 /**
 * RouterInterface Class
 *
@@ -25,7 +27,8 @@ interface RouterInterface
      * Dispatch route and create the right controller and execute the right method
      *
      * @param string $url
-     * @return void
+     * @return RouteInterface
+     * @throws RouteNotFoundException if there is no route that matches the given url 
      */
-    public function dispatch(string $url): void;
+    public function dispatch(string $url): RouteInterface;
 }
